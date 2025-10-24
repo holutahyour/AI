@@ -39,20 +39,31 @@ export function SiteHeader() {
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>
-        <Badge variant="outline" className="ml-2">
-          Active
+        <Badge variant="outline" className="ml-2 text-green-600 border-green-600">
+          Live Data
         </Badge>
-        <div className="ml-auto flex items-center gap-2">
+        <div className="ml-auto flex items-center gap-4">
           <Command className="hidden sm:flex">
-            <CommandInput placeholder="Search vendors, invoices..." />
+            <CommandInput placeholder="Search transactions, customers, products..." />
           </Command>
-          <Button variant="ghost" size="icon">
-            <Bell className="h-4 w-4" />
-            <span className="sr-only">Notifications</span>
-          </Button>
-          <Avatar className="h-8 w-8">
-            <AvatarFallback>JD</AvatarFallback>
-          </Avatar>
+          <div className="relative">
+            <Button variant="ghost" size="icon">
+              <Bell className="h-4 w-4" />
+              <span className="sr-only">Notifications</span>
+            </Button>
+            <div className="absolute -right-1 -top-1 flex h-4 w-4 items-center justify-center rounded-full bg-red-500 text-xs text-white">
+              3
+            </div>
+          </div>
+          <div className="flex items-center gap-2">
+            <Avatar className="h-8 w-8">
+              <AvatarFallback>JS</AvatarFallback>
+            </Avatar>
+            <div className="flex flex-col text-sm">
+              <span className="font-semibold">John Smith</span>
+              <span className="text-muted-foreground">Admin</span>
+            </div>
+          </div>
         </div>
       </div>
     </header>

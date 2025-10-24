@@ -1,0 +1,238 @@
+# Cline Rules for ERP App Project
+
+## Project Overview
+- **Framework**: Next.js 16.0.0 with App Router
+- **React Version**: 19.2.0
+- **UI Library**: shadcn/ui (new-york style)
+- **Styling**: Tailwind CSS v4 with CSS variables
+- **Icons**: Lucide React
+- **Forms**: React Hook Form + Zod validation
+- **Type Safety**: TypeScript 5
+
+## MCP Server Usage Guidelines
+
+### Chakra MCP Server Usage
+
+**When to Use Chakra MCP:**
+- For design system consultation and color theory guidance
+- When creating custom color palettes or themes
+- For accessibility (a11y) best practices and ARIA guidelines
+- When designing component layouts and spacing systems
+- For typography scale and hierarchy decisions
+
+**Chakra MCP Best Practices:**
+1. Use Chakra MCP to validate accessibility of color combinations
+2. Consult for responsive design breakpoint strategies
+3. Reference for component composition patterns
+4. Use for semantic HTML structure recommendations
+
+**Do NOT use Chakra MCP for:**
+- Adding actual Chakra UI components (this project uses shadcn/ui)
+- Installing Chakra UI library (incompatible with current stack)
+
+### shadcn MCP Server Usage
+
+**When to Use shadcn MCP:**
+- Adding new UI components to the project
+- Updating existing shadcn/ui components
+- Installing component dependencies
+- Checking available component variants and props
+
+**shadcn MCP Best Practices:**
+1. **Always check if component exists first** before adding
+   - List current components in `components/ui/` directory
+   - Avoid duplicate installations
+
+2. **Component Installation Pattern:**
+   ```bash
+   # Use shadcn MCP to add components
+   pnpm dlx shadcn@latest add [component-name]
+   ```
+
+3. **Customization After Installation:**
+   - Components are copied to `components/ui/`
+   - Customize as needed while maintaining base structure
+   - Keep modifications documented
+
+4. **Existing Component List** (as of now):
+   - accordion, alert-dialog, alert, aspect-ratio, avatar
+   - badge, breadcrumb, button, calendar, card, carousel, chart
+   - checkbox, collapsible, command, context-menu, dialog
+   - dropdown-menu, empty, field, form, hover-card
+   - input-group, input-otp, input, kbd, label
+   - menubar, native-select, navigation-menu, pagination
+   - popover, progress, radio-group, resizable, scroll-area
+   - select, separator, sheet, sidebar, skeleton
+   - slider, sonner, spinner, switch, table
+   - tabs, textarea, toggle-group, toggle, tooltip
+
+## Component Development Rules
+
+### 1. File Organization
+```
+components/
+├── ui/               # shadcn/ui base components (DO NOT modify structure)
+├── [feature]/        # Feature-specific components
+└── [component].tsx   # Shared/reusable components
+```
+
+### 2. Component Creation Pattern
+```typescript
+// Use this pattern for new components
+import { cn } from "@/lib/utils"
+import { ComponentProps } from "react"
+
+interface ComponentNameProps extends ComponentProps<"div"> {
+  // Props here
+}
+
+export function ComponentName({ className, ...props }: ComponentNameProps) {
+  return (
+    <div className={cn("base-classes", className)} {...props}>
+      {/* Component content */}
+    </div>
+  )
+}
+```
+
+### 3. Styling Guidelines
+- **Always use Tailwind CSS** for styling
+- Use `cn()` utility from `@/lib/utils` for conditional classes
+- Follow the CSS variable system defined in `app/globals.css`
+- Maintain the neutral base color scheme
+- Use semantic color tokens (e.g., `bg-background`, `text-foreground`)
+
+### 4. Import Aliases
+```typescript
+// Use these import paths
+import Component from "@/components/[name]"
+import { utility } from "@/lib/utils"
+import { useHook } from "@/hooks/[hook-name]"
+import UIComponent from "@/components/ui/[component]"
+```
+
+### 5. Form Handling
+```typescript
+// Standard form pattern with react-hook-form + zod
+import { useForm } from "react-hook-form"
+import { zodResolver } from "@hookform/resolvers/zod"
+import * as z from "zod"
+
+const formSchema = z.object({
+  // Schema definition
+})
+
+const form = useForm<z.infer<typeof formSchema>>({
+  resolver: zodResolver(formSchema),
+})
+```
+
+### 6. Icon Usage
+- Use Lucide React icons only
+- Import pattern: `import { IconName } from "lucide-react"`
+- Standard size: `className="h-4 w-4"` or use size prop
+
+## Development Workflow
+
+### Adding New Features
+1. **Plan the component structure** using Chakra MCP for design guidance
+2. **Check existing components** - list files before adding new ones
+3. **Use shadcn MCP** to add missing UI components
+4. **Build feature components** following the project patterns
+5. **Test responsiveness** and accessibility
+
+### Adding New UI Components
+```bash
+# Step 1: Check if component exists
+ls components/ui/
+
+# Step 2: Add via shadcn MCP if needed
+pnpm dlx shadcn@latest add [component-name]
+
+# Step 3: Verify installation
+# Component should appear in components/ui/
+```
+
+### Updating Components
+- Prefer `replace_in_file` for targeted changes
+- Use `write_to_file` only when restructuring entire component
+- Always maintain TypeScript types
+- Keep existing component patterns consistent
+
+## Code Quality Standards
+
+### TypeScript
+- Use explicit types for props and return values
+- Avoid `any` type - use `unknown` if needed
+- Export types/interfaces that may be reused
+- Use type inference where obvious
+
+### React Best Practices
+- Use functional components only
+- Prefer named exports for components
+- Use React 19 features (no legacy patterns)
+- Implement proper error boundaries where needed
+- Use Server Components by default (add "use client" only when needed)
+
+### Performance
+- Lazy load heavy components when appropriate
+- Optimize images with Next.js Image component
+- Use React.memo() judiciously, not by default
+- Keep bundle size in check
+
+## Testing Strategy
+- Test components in isolation when possible
+- Use browser_action for visual verification
+- Check responsive behavior at different breakpoints
+- Validate accessibility with Chakra MCP guidance
+
+## Common Pitfalls to Avoid
+
+1. **DON'T mix UI libraries** - stick to shadcn/ui + Radix UI
+2. **DON'T install Chakra UI** - use Chakra MCP for guidance only
+3. **DON'T modify ui/ components heavily** - compose new components instead
+4. **DON'T skip TypeScript types** - maintain type safety
+5. **DON'T use inline styles** - use Tailwind classes
+6. **DON'T forget "use client"** when using hooks/interactivity
+7. **DON'T duplicate components** - check existing ones first
+
+## MCP Server Integration Summary
+
+| Task | Primary Tool | Secondary Tool |
+|------|--------------|----------------|
+| Add UI Component | shadcn MCP | Manual file creation |
+| Design Guidance | Chakra MCP | shadcn docs |
+| Color Theory | Chakra MCP | Tailwind config |
+| Accessibility | Chakra MCP | Manual testing |
+| Component Props | shadcn MCP | TypeScript |
+| Layout Design | Chakra MCP | Tailwind utilities |
+
+## Quick Reference Commands
+
+```bash
+# Development
+pnpm dev              # Start dev server (localhost:3000)
+pnpm build            # Production build
+pnpm lint             # Run ESLint
+
+# Adding Components
+pnpm dlx shadcn@latest add button
+pnpm dlx shadcn@latest add form
+pnpm dlx shadcn@latest add [component-name]
+
+# List installed components
+ls components/ui/
+```
+
+## Environment
+- **Node.js**: Use LTS version
+- **Package Manager**: pnpm (preferred)
+- **Port**: 3000 (default Next.js dev server)
+- **CSS**: Tailwind CSS v4 with PostCSS
+
+## Additional Notes
+- This is a server-side rendered Next.js app with App Router
+- Components are RSC (React Server Components) by default
+- Use "use client" directive for client-side interactivity
+- All shadcn components are installed in `components/ui/`
+- Custom components go in `components/` root or feature folders
