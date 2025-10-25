@@ -2,26 +2,27 @@
 
 import * as React from "react"
 import {
-  IconCamera,
-  IconChartBar,
+  IconBook,
+  IconStar,
+  IconCreditCard,
   IconDashboard,
-  IconDatabase,
-  IconFileAi,
-  IconFileDescription,
-  IconFileWord,
-  IconFolder,
-  IconHelp,
-  IconInnerShadowTop,
-  IconListDetails,
-  IconReport,
-  IconSearch,
+  IconChartLine,
+  IconClock,
+  IconCash,
+  IconDiscount,
+  IconFileText,
+  IconReceipt,
+  IconBuildingBank,
+  IconBox,
+  IconShoppingCart,
+  IconPencil,
+  IconReportMoney,
   IconSettings,
-  IconUsers,
+  IconChevronDown,
+  IconInnerShadowTop,
 } from "@tabler/icons-react"
 
-import { NavDocuments } from "./nav-documents"
 import { NavMain } from "./nav-main"
-import { NavSecondary } from "./nav-secondary"
 import { NavUser } from "./nav-user"
 import {
   Sidebar,
@@ -35,117 +36,99 @@ import {
 
 const data = {
   user: {
-    name: "shadcn",
-    email: "m@example.com",
-    avatar: "/avatars/shadcn.jpg",
+    name: "John Smith",
+    email: "admin",
+    avatar: "/avatars/john-smith.jpg",
   },
   navMain: [
     {
-      title: "Dashboard",
+      title: "ERP Financial",
       url: "#",
-      icon: IconDashboard,
+      icon: IconBook,
     },
     {
-      title: "Lifecycle",
+      title: "Favorites",
       url: "#",
-      icon: IconListDetails,
+      icon: IconStar,
     },
     {
-      title: "Analytics",
-      url: "#",
-      icon: IconChartBar,
-    },
-    {
-      title: "Projects",
-      url: "#",
-      icon: IconFolder,
-    },
-    {
-      title: "Team",
-      url: "#",
-      icon: IconUsers,
-    },
-  ],
-  navClouds: [
-    {
-      title: "Capture",
-      icon: IconCamera,
-      isActive: true,
-      url: "#",
+      title: "Accounts Payable",
+      icon: IconCreditCard,
+      isCollapsible: true,
       items: [
         {
-          title: "Active Proposals",
+          title: "AP Dashboard",
           url: "#",
+          icon: IconDashboard,
         },
         {
-          title: "Archived",
+          title: "Vendor Performance",
           url: "#",
+          icon: IconChartLine,
+        },
+        {
+          title: "Payment Aging B...",
+          url: "#",
+          icon: IconClock,
+        },
+        {
+          title: "Cash Flow Impact...",
+          url: "#",
+          icon: IconCash,
+        },
+        {
+          title: "Early Discount Op...",
+          url: "#",
+          icon: IconDiscount,
+        },
+        {
+          title: "Transaction Report",
+          url: "#",
+          icon: IconFileText,
         },
       ],
     },
     {
-      title: "Proposal",
-      icon: IconFileDescription,
-      url: "#",
-      items: [
-        {
-          title: "Active Proposals",
-          url: "#",
-        },
-        {
-          title: "Archived",
-          url: "#",
-        },
-      ],
+      title: "Accounts Receivable",
+      icon: IconReceipt,
+      isCollapsible: true,
+      items: [],
     },
     {
-      title: "Prompts",
-      icon: IconFileAi,
-      url: "#",
-      items: [
-        {
-          title: "Active Proposals",
-          url: "#",
-        },
-        {
-          title: "Archived",
-          url: "#",
-        },
-      ],
+      title: "Banking & Cash",
+      icon: IconBuildingBank,
+      isCollapsible: true,
+      items: [],
     },
-  ],
-  navSecondary: [
     {
-      title: "Settings",
-      url: "#",
+      title: "Inventory Management",
+      icon: IconBox,
+      isCollapsible: true,
+      items: [],
+    },
+    {
+      title: "Purchase Orders",
+      icon: IconShoppingCart,
+      isCollapsible: true,
+      items: [],
+    },
+    {
+      title: "Order Entry",
+      icon: IconPencil,
+      isCollapsible: true,
+      items: [],
+    },
+    {
+      title: "Financial Reporting",
+      icon: IconReportMoney,
+      isCollapsible: true,
+      items: [],
+    },
+    {
+      title: "System Administration",
       icon: IconSettings,
-    },
-    {
-      title: "Get Help",
-      url: "#",
-      icon: IconHelp,
-    },
-    {
-      title: "Search",
-      url: "#",
-      icon: IconSearch,
-    },
-  ],
-  documents: [
-    {
-      name: "Data Library",
-      url: "#",
-      icon: IconDatabase,
-    },
-    {
-      name: "Reports",
-      url: "#",
-      icon: IconReport,
-    },
-    {
-      name: "Word Assistant",
-      url: "#",
-      icon: IconFileWord,
+      isCollapsible: true,
+      items: [],
     },
   ],
 }
@@ -162,7 +145,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             >
               <a href="#">
                 <IconInnerShadowTop className="!size-5" />
-                <span className="text-base font-semibold">Acme Inc.</span>
+                <span className="text-base font-semibold">ERP Financial</span>
               </a>
             </SidebarMenuButton>
           </SidebarMenuItem>
@@ -170,8 +153,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={data.navMain} />
-        <NavDocuments items={data.documents} />
-        <NavSecondary items={data.navSecondary} className="mt-auto" />
       </SidebarContent>
       <SidebarFooter>
         <NavUser user={data.user} />

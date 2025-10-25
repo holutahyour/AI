@@ -8,6 +8,8 @@ import { PanelLeftIcon } from "lucide-react"
 import { useIsMobile } from "@/hooks/use-mobile"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
+import * as Collapsible from "@radix-ui/react-collapsible"
+
 import { Input } from "@/components/ui/input"
 import { Separator } from "@/components/ui/separator"
 import {
@@ -606,10 +608,8 @@ function SidebarMenuSkeleton({
 }: React.ComponentProps<"div"> & {
   showIcon?: boolean
 }) {
-  // Random width between 50 to 90%.
-  const width = React.useMemo(() => {
-    return `${Math.floor(Math.random() * 40) + 50}%`
-  }, [])
+  // Static width for skeleton.
+  const width = "70%"
 
   return (
     <div
@@ -698,6 +698,9 @@ function SidebarMenuSubButton({
   )
 }
 
+const SidebarMenuCollapsible = Collapsible.Root
+const SidebarMenuCollapsibleContent = Collapsible.CollapsibleContent
+
 export {
   Sidebar,
   SidebarContent,
@@ -722,5 +725,7 @@ export {
   SidebarRail,
   SidebarSeparator,
   SidebarTrigger,
+  SidebarMenuCollapsible,
+  SidebarMenuCollapsibleContent,
   useSidebar,
 }
